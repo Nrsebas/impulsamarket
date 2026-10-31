@@ -1,0 +1,64 @@
+/* ImpulsaMarket — estilos del panel de administración (usa las variables de styles.css) */
+input[type="password"] {
+  background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px;
+  color:var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem; padding:12px 16px;
+  outline:none; width:100%;
+}
+input[type="password"]:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,.12); }
+
+/* Login */
+.login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.login-card { width:min(420px,100%); background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:40px 36px; box-shadow:var(--shadow); }
+.login-logo { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:900; color:var(--gold-light); text-align:center; }
+.login-sub { text-align:center; color:var(--text-muted); margin-bottom:28px; font-size:.9rem; }
+.login-error { color:var(--danger); font-size:.85rem; min-height:22px; margin-bottom:8px; text-align:center; }
+.volver { display:block; text-align:center; margin-top:18px; color:var(--text-muted); font-size:.85rem; text-decoration:none; }
+.volver:hover { color:var(--gold-light); }
+
+/* Layout */
+.admin-layout { display:grid; grid-template-columns:250px 1fr; min-height:100vh; }
+.admin-side { background:var(--bg-card); border-right:1px solid var(--border); padding:28px 18px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+.admin-brand { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:900; color:var(--gold-light); margin-bottom:28px; padding:0 10px; }
+.admin-brand small { display:block; font-family:'DM Sans',sans-serif; font-size:.7rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+#admin-menu { display:flex; flex-direction:column; gap:4px; flex:1; }
+#admin-menu button { background:none; border:none; color:var(--text-muted); text-align:left; padding:12px 14px; border-radius:10px; font:500 .92rem 'DM Sans',sans-serif; cursor:pointer; transition:all var(--transition); }
+#admin-menu button:hover { background:var(--bg-glass); color:var(--text); }
+#admin-menu button.activo { background:var(--bg-glass); color:var(--gold-light); border:1px solid var(--border); }
+.admin-user { border-top:1px solid var(--border); padding-top:18px; font-size:.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:12px; }
+.admin-user .btn-outline { padding:9px 16px; font-size:.75rem; }
+.admin-main { padding:36px 40px; min-width:0; }
+
+/* Resumen */
+.admin-main h1 { font-family:'Playfair Display',serif; font-size:1.9rem; color:var(--gold-light); }
+.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:16px; margin-top:24px; }
+.resumen-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+.resumen-n { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--gold-light); }
+.resumen-l { color:var(--text-muted); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; }
+
+/* Tabla */
+.tabla-head { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap; }
+.tabla-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.88rem; }
+th { text-align:left; padding:14px 16px; color:var(--gold); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; border-bottom:1px solid var(--border); white-space:nowrap; }
+td { padding:13px 16px; border-bottom:1px solid rgba(201,168,76,.08); vertical-align:top; max-width:320px; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--bg-glass); }
+.vacio { padding:40px; text-align:center; color:var(--text-muted); }
+.acciones { display:flex; gap:8px; white-space:nowrap; }
+.btn-mini { background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--text); padding:6px 12px; border-radius:8px; font:500 .78rem 'DM Sans',sans-serif; cursor:pointer; }
+.btn-mini:hover { border-color:var(--gold); }
+.btn-mini.peligro:hover { border-color:var(--danger); color:var(--danger); }
+.etiqueta { display:inline-block; padding:3px 11px; border-radius:50px; font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--border); }
+.etiqueta.si, .etiqueta.admin { color:var(--gold-light); background:var(--bg-glass); }
+.etiqueta.no { color:var(--danger); border-color:rgba(231,76,60,.3); background:rgba(231,76,60,.1); }
+.etiqueta.empleado { color:var(--info); border-color:rgba(52,152,219,.3); background:rgba(52,152,219,.1); }
+.etiqueta.cliente { color:var(--success); border-color:rgba(46,204,113,.3); background:rgba(46,204,113,.1); }
+.estrellas { color:var(--gold); letter-spacing:2px; white-space:nowrap; }
+.ayuda { color:var(--text-muted); font-size:.78rem; }
+
+@media (max-width: 800px) {
+  .admin-layout { grid-template-columns:1fr; }
+  .admin-side { position:static; height:auto; }
+  #admin-menu { flex-direction:row; flex-wrap:wrap; }
+  .admin-main { padding:24px 16px; }
+}

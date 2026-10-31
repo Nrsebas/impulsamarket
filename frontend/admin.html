@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | ImpulsaMarket</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="vista-login" class="login-wrap">
+    <form id="form-login" class="login-card">
+      <div class="login-logo">ImpulsaMarket</div>
+      <p class="login-sub">Panel de administración</p>
+      <div class="form-group">
+        <label for="login-email">Correo</label>
+        <input type="email" id="login-email" placeholder="admin@impulsamarket.co" required>
+      </div>
+      <div class="form-group">
+        <label for="login-pass">Contraseña</label>
+        <input type="password" id="login-pass" required>
+      </div>
+      <div class="login-error" id="login-error"></div>
+      <button type="submit" class="btn-gold" style="width:100%">Entrar</button>
+      <a href="index.html" class="volver">← Volver al sitio</a>
+    </form>
+  </div>
+
+  <!-- PANEL -->
+  <div id="vista-panel" class="admin-layout" style="display:none;">
+    <aside class="admin-side">
+      <div class="admin-brand">ImpulsaMarket<small>Administración</small></div>
+      <div id="admin-menu"></div>
+      <div class="admin-user">
+        <div id="admin-nombre"></div>
+        <button class="btn-outline" id="btn-salir">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div id="seccion-resumen"></div>
+      <div id="seccion-tabla" style="display:none;">
+        <div class="tabla-head">
+          <h1 id="tabla-titulo"></h1>
+          <button class="btn-gold" id="btn-nuevo">+ Nuevo</button>
+        </div>
+        <div class="tabla-wrap"><table id="tabla"></table></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL CREAR / EDITAR -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button class="modal-close" id="modal-cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-registro"></form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/admin.js"></script>
+</body>
+</html>

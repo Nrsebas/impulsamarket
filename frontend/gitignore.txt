@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Entornos y caché de Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Archivos generados
+dist/
+build/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Archivos temporales y del sistema
+*.log
+.DS_Store
+Thumbs.db
+
+# Configuración local del editor
+.vscode/
+.idea/

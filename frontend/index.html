@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpulsaMarket | Crecimiento para tu Negocio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/secciones.css">
+</head>
+<body>
+
+  <div class="scroll-progress" id="sp"></div>
+
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>Logos Profesionales</span><span>Propaganda Digital</span><span>Carteles & Impresos</span>
+      <span>Branding Completo</span><span>Diseño para Redes</span><span>Resultados Reales</span>
+      <span>Logos Profesionales</span><span>Propaganda Digital</span><span>Carteles & Impresos</span>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-logo">ImpulsaMarket</div>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#testimonios">Clientes</a>
+      <a href="#aliados">Aliados</a>
+    </div>
+    <div class="nav-acciones">
+      <a class="nav-login" href="admin.html">Iniciar sesión</a>
+      <button class="nav-cta" onclick="abrirModalCotizacion()">Cotizar Ahora</button>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-tag"><span>Agencia de Diseño & Marketing</span></div>
+    <h1 class="hero-title">Impulsamos<br><em>pequeños negocios,</em></h1>
+    <p class="hero-sub">movemos grandes sueños.</p>
+    <p class="hero-desc">Creamos identidades visuales y estrategias digitales que convierten marcas en referentes. Conexión directa a base de datos MySQL.</p>
+    <div class="hero-btns">
+      <a href="#servicios" class="btn-gold" style="text-decoration:none;">Ver Servicios</a>
+      <button class="btn-outline" onclick="abrirModalCotizacion()">Solicitar Cotización</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-n" id="stat-pedidos">0</div><div class="stat-l">Pedidos Totales</div></div>
+      <div class="stat-item"><div class="stat-n" id="stat-proceso">0</div><div class="stat-l">En Proceso</div></div>
+      <div class="stat-item"><div class="stat-n" id="stat-entregados">0</div><div class="stat-l">Entregados</div></div>
+      <div class="stat-item"><div class="stat-n" id="stat-cancelados">0</div><div class="stat-l">Cancelados</div></div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="svc-header">
+      <div>
+        <div class="section-label">Lo que hacemos</div>
+        <h2 class="section-title">Nuestros <em>Servicios</em></h2>
+      </div>
+      <p class="section-desc">Soluciones profesionales registradas en MySQL.</p>
+    </div>
+    <div class="services-grid" id="svc-grid">
+      <!-- Inyectados por JavaScript desde la BD -->
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso">
+    <div class="section-label">Cómo trabajamos</div>
+    <h2 class="section-title">Proceso <em>Simple</em></h2>
+    <div class="proceso-grid">
+      <div class="paso"><div class="paso-n">01</div><div class="paso-t">Solicitud</div><div class="paso-d">El cliente envía el formulario con sus datos.</div></div>
+      <div class="paso"><div class="paso-n">02</div><div class="paso-t">Registro</div><div class="paso-d">Node.js almacena el pedido en MySQL con estado inicial.</div></div>
+      <div class="paso"><div class="paso-n">03</div><div class="paso-t">Gestión</div><div class="paso-d">El administrador actualiza el estado o detalles.</div></div>
+      <div class="paso"><div class="paso-n">04</div><div class="paso-t">Entrega</div><div class="paso-d">El pedido cambia a 'entregado' en tiempo real.</div></div>
+    </div>
+  </section>
+
+  <!-- CLIENTES (reseñas desde la BD) -->
+  <section id="testimonios">
+    <div class="section-label">Lo que dicen</div>
+    <h2 class="section-title">Nuestros <em>Clientes</em></h2>
+    <div class="resenas-grid" id="resenas-grid">
+      <p class="resenas-msg">Cargando reseñas...</p>
+    </div>
+  </section>
+
+  <!-- ALIADOS -->
+  <section id="aliados">
+    <div class="section-label">Trabajamos con</div>
+    <h2 class="section-title">Nuestros <em>Aliados</em></h2>
+    <div class="aliados-grid">
+      <div class="aliado"><div class="aliado-ico">🖨️</div><div class="aliado-n">Imprenta Aliada</div><div class="aliado-d">Impresión de volantes, pendones y carteles.</div></div>
+      <div class="aliado"><div class="aliado-ico">📸</div><div class="aliado-n">Estudio Fotográfico</div><div class="aliado-d">Fotografía de producto para tu marca.</div></div>
+      <div class="aliado"><div class="aliado-ico">📣</div><div class="aliado-n">Agencia de Medios</div><div class="aliado-d">Pauta y difusión en medios locales.</div></div>
+      <div class="aliado"><div class="aliado-ico">💻</div><div class="aliado-n">Desarrollo Web</div><div class="aliado-d">Páginas y tiendas en línea para emprendedores.</div></div>
+    </div>
+  </section>
+
+  <!-- MODAL PARA CREAR / EDITAR PEDIDO -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modal-title">Solicitar Cotización</h2>
+        <button class="modal-close" onclick="cerrarModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-pedido">
+          <input type="hidden" id="pedido-id" value="">
+
+          <div class="form-group" id="grupo-cliente-nombre">
+            <label for="cliente-nombre">Nombre Completo</label>
+            <input type="text" id="cliente-nombre" placeholder="Ej: Juan Pérez" required>
+          </div>
+
+          <div class="form-row" id="grupo-cliente-contacto">
+            <div class="form-group">
+              <label for="cliente-email">Correo Electrónico</label>
+              <input type="email" id="cliente-email" placeholder="juan@correo.com" required>
+            </div>
+            <div class="form-group">
+              <label for="cliente-telefono">Teléfono</label>
+              <input type="text" id="cliente-telefono" placeholder="300 000 0000">
+            </div>
+          </div>
+
+          <div class="form-group" id="grupo-servicio-select">
+            <label for="servicio-id">Servicio Requerido</label>
+            <select id="servicio-id" required>
+              <option value="">Cargando servicios...</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="grupo-estado-edit" style="display:none;">
+            <label for="pedido-estado">Estado del Pedido</label>
+            <select id="pedido-estado">
+              <option value="en_proceso">En Proceso</option>
+              <option value="entregado">Entregado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pedido-detalles">Detalles del Proyecto</label>
+            <textarea id="pedido-detalles" placeholder="Describe brevemente lo que necesitas..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-gold" style="width:100%; margin-top:10px;">Guardar Pedido</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTONES FLOTANTES -->
+  <div class="floating-buttons">
+    <button class="fab" onclick="toggleAdminPanel()" title="Panel de Administración">
+      <div class="fab-icon">⚙</div>
+      <span class="fab-label">Panel Admin</span>
+      <div class="badge" id="admin-badge">0</div>
+    </button>
+  </div>
+
+  <!-- PANEL LATERAL DE ADMINISTRACIÓN (CRUD VISUAL) -->
+  <div class="side-panel" id="panel-admin">
+    <div class="panel-head">
+      <h3>⚙ Gestión de Pedidos (CRUD)</h3>
+      <button class="modal-close" onclick="toggleAdminPanel()">✕</button>
+    </div>
+    <div class="panel-body">
+      <!-- Estadísticas rápidas -->
+      <div class="pedidos-stats">
+        <div class="ped-stat proceso">
+          <div class="ped-stat-n" id="stat-panel-proceso">0</div>
+          <div class="ped-stat-l">Proceso</div>
+        </div>
+        <div class="ped-stat entregado">
+          <div class="ped-stat-n" id="stat-panel-entregado">0</div>
+          <div class="ped-stat-l">Entregado</div>
+        </div>
+        <div class="ped-stat cancelado">
+          <div class="ped-stat-n" id="stat-panel-cancelado">0</div>
+          <div class="ped-stat-l">Cancelado</div>
+        </div>
+      </div>
+
+      <!-- Contenedor donde se inyectan las tarjetas del CRUD -->
+      <div id="lista-pedidos-admin"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/secciones.js"></script>
+</body>
+</html>
