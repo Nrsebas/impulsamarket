@@ -395,3 +395,4 @@ SELECT 'Pagos'              , COUNT(*)              FROM pagos      UNION ALL
 SELECT 'Resenas'            , COUNT(*)              FROM resenas;
 
 SELECT * FROM v_estadisticas;
+
