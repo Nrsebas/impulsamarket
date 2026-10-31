@@ -67,28 +67,29 @@ async function getById(id) {
   return rows[0];
 }
 
-/* ── Crear pedido (busca o crea el cliente y lo vincula con usuario si existe) ── */
+/* ── Crear pedido (busca o crea el cliente por email o id_usuario) ── */
 async function create({ nombre_cliente, email_cliente, telefono_cliente, id_servicio, detalles }) {
   const emailLimpio = String(email_cliente).trim();
   const telLimpio   = telefono_cliente ? String(telefono_cliente).trim() : null;
 
-  // Buscar cliente existente por email
-  const [rows] = await pool.query('SELECT id_cliente FROM clientes WHERE email = ?', [emailLimpio]);
+  // 1. Verificar si existe una cuenta de usuario con ese correo
+  const [usr] = await pool.query('SELECT id_usuario FROM usuarios WHERE email = ?', [emailLimpio]);
+  const id_usuario = usr.length ? usr[0].id_usuario : null;
+
+  // 2. Buscar cliente existente por email O por id_usuario (evita duplicar uq_cliente_usuario)
+  const [rows] = await pool.query(
+    'SELECT id_cliente, id_usuario FROM clientes WHERE email = ? OR (id_usuario IS NOT NULL AND id_usuario = ?) LIMIT 1',
+    [emailLimpio, id_usuario]
+  );
   let id_cliente;
 
   if (rows.length) {
     id_cliente = rows[0].id_cliente;
-    if (telLimpio) {
-      await pool.query(
-        'UPDATE clientes SET telefono = COALESCE(?, telefono) WHERE id_cliente = ?',
-        [telLimpio, id_cliente]
-      );
-    }
+    await pool.query(
+      'UPDATE clientes SET id_usuario = COALESCE(id_usuario, ?), telefono = COALESCE(?, telefono) WHERE id_cliente = ?',
+      [id_usuario, telLimpio, id_cliente]
+    );
   } else {
-    // Si ya existe una cuenta de usuario con ese correo, vincular id_usuario automáticamente
-    const [usr] = await pool.query('SELECT id_usuario FROM usuarios WHERE email = ?', [emailLimpio]);
-    const id_usuario = usr.length ? usr[0].id_usuario : null;
-
     const [res] = await pool.query(
       'INSERT INTO clientes (id_usuario, nombre, email, telefono) VALUES (?, ?, ?, ?)',
       [id_usuario, String(nombre_cliente).trim(), emailLimpio, telLimpio]

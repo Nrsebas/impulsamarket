@@ -278,7 +278,7 @@ INSERT INTO servicios (id_categoria, nombre, descripcion, precio_base, activo) V
 
 -- ── 4. Empleados ─────────────────────────
 INSERT INTO empleados (id_usuario, nombre, cargo, email, activo) VALUES
-  (2,    'Valentina Ríos',   'Diseñadora Senior',     'v.rios@impulsamarket.co',    1),
+  (2,    'Valentina Ríos',   'Diseñadora Senior',     'empleado@impulsamarket.co',  1),
   (NULL, 'Mateo Salazar',    'Diseñador Web',          'm.salazar@impulsamarket.co', 1),
   (NULL, 'Isabella Moreno',  'Community Manager',      'i.moreno@impulsamarket.co',  1),
   (NULL, 'Santiago Torres',  'Asesor Comercial',       's.torres@impulsamarket.co',  1),
@@ -287,9 +287,9 @@ INSERT INTO empleados (id_usuario, nombre, cargo, email, activo) VALUES
 
 -- ── 5. Clientes ──────────────────────────
 INSERT INTO clientes (id_usuario, nombre, email, telefono, ciudad) VALUES
-  (3,    'Juan Pérez',       'juan.perez@gmail.com',       '3101234567', 'Medellín'),
-  (4,    'María López',      'maria.lopez@hotmail.com',    '3209876543', 'Bello'),
-  (5,    'Carlos Gómez',     'cgomez@empresa.com',         '3155554321', 'Envigado'),
+  (3,    'Juan Pérez',       'cliente1@correo.com',        '3101234567', 'Medellín'),
+  (4,    'María López',      'cliente2@correo.com',        '3209876543', 'Bello'),
+  (5,    'Carlos Gómez',     'cliente3@correo.com',        '3155554321', 'Envigado'),
   (NULL, 'Luisa Martínez',   'luisa.m@correo.co',          '3001112233', 'Medellín'),
   (NULL, 'Andrés Castillo',  'andres.castillo@gmail.com',  '3184445566', 'Itagüí'),
   (NULL, 'Sara Jiménez',     'sara.j@negocio.co',          '3122223344', 'Sabaneta'),
