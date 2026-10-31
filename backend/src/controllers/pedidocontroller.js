@@ -6,7 +6,7 @@ const Pedido = require('../models/pedidoModel');
 ───────────────────────────────────────────── */
 
 /* GET /api/pedidos */
-const listarPedidos = async (req, res) => {
+const listarPedidos = async (_req, res) => {
   try {
     const pedidos = await Pedido.getAll();
     res.json(pedidos);
@@ -38,9 +38,12 @@ const crearPedido = async (req, res) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email_cliente))
       return res.status(400).json({ error: 'El correo no es válido' });
 
-    // Evita el error 500 por llave foránea cuando el servicio no existe
-    const [svc] = await pool.query('SELECT id_servicio FROM servicios WHERE id_servicio = ?', [id_servicio]);
-    if (!svc.length) return res.status(400).json({ error: 'El servicio seleccionado no existe' });
+    // Verifica que el servicio exista y esté activo
+    const [svc] = await pool.query(
+      'SELECT id_servicio FROM servicios WHERE id_servicio = ? AND activo = 1',
+      [id_servicio]
+    );
+    if (!svc.length) return res.status(400).json({ error: 'El servicio seleccionado no existe o no está disponible' });
 
     const nuevo = await Pedido.create({ nombre_cliente, email_cliente, telefono_cliente, id_servicio, detalles });
     res.status(201).json(nuevo);
@@ -80,7 +83,7 @@ const eliminarPedido = async (req, res) => {
 };
 
 /* GET /api/pedidos/stats */
-const estadisticas = async (req, res) => {
+const estadisticas = async (_req, res) => {
   try {
     const stats = await Pedido.getStats();
     res.json(stats);
@@ -95,9 +98,15 @@ const estadisticas = async (req, res) => {
 ───────────────────────────────────────────── */
 
 /* GET /api/servicios */
-const listarServicios = async (req, res) => {
+const listarServicios = async (_req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM servicios ORDER BY precio_base ASC');
+    const [rows] = await pool.query(`
+      SELECT s.*, s.precio_base AS precio, c.nombre AS categoria
+      FROM servicios s
+      JOIN categorias c ON s.id_categoria = c.id_categoria
+      WHERE s.activo = 1
+      ORDER BY s.precio_base ASC
+    `);
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -108,7 +117,12 @@ const listarServicios = async (req, res) => {
 /* GET /api/servicios/:id */
 const obtenerServicio = async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM servicios WHERE id_servicio = ?', [req.params.id]);
+    const [rows] = await pool.query(`
+      SELECT s.*, s.precio_base AS precio, c.nombre AS categoria
+      FROM servicios s
+      JOIN categorias c ON s.id_categoria = c.id_categoria
+      WHERE s.id_servicio = ?
+    `, [req.params.id]);
     if (!rows.length) return res.status(404).json({ error: 'Servicio no encontrado' });
     res.json(rows[0]);
   } catch (err) {

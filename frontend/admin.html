@@ -3,39 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración | ImpulsaMarket</title>
+  <title>Acceso y Cuenta | ImpulsaMarket</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
-  <!-- LOGIN -->
+  <!-- LOGIN Y REGISTRO -->
   <div id="vista-login" class="login-wrap">
-    <form id="form-login" class="login-card">
+    <div class="login-card">
       <div class="login-logo">ImpulsaMarket</div>
-      <p class="login-sub">Panel de administración</p>
-      <div class="form-group">
-        <label for="login-email">Correo</label>
-        <input type="email" id="login-email" placeholder="admin@impulsamarket.co" required>
+      <p class="login-sub" id="auth-sub">Inicia sesión como cliente o administrador</p>
+
+      <!-- Pestañas Iniciar sesión / Registrarse -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab activo" id="tab-login">Iniciar sesión</button>
+        <button type="button" class="auth-tab" id="tab-registro">Crear cuenta</button>
       </div>
-      <div class="form-group">
-        <label for="login-pass">Contraseña</label>
-        <input type="password" id="login-pass" required>
-      </div>
-      <div class="login-error" id="login-error"></div>
-      <button type="submit" class="btn-gold" style="width:100%">Entrar</button>
-      <a href="index.html" class="volver">← Volver al sitio</a>
-    </form>
+
+      <!-- FORMULARIO: INICIAR SESIÓN -->
+      <form id="form-login">
+        <div class="form-group">
+          <label for="login-email">Correo electrónico</label>
+          <input type="email" id="login-email" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label for="login-pass">Contraseña</label>
+          <input type="password" id="login-pass" placeholder="••••••••" required>
+        </div>
+        <div class="login-error" id="login-error"></div>
+        <button type="submit" class="btn-gold" style="width:100%">Entrar</button>
+      </form>
+
+      <!-- FORMULARIO: REGISTRO DE CLIENTE -->
+      <form id="form-registro-cliente" style="display:none;">
+        <div class="form-group">
+          <label for="reg-nombre">Nombre completo</label>
+          <input type="text" id="reg-nombre" placeholder="Ej: Juan Pérez" required>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Correo electrónico</label>
+          <input type="email" id="reg-email" placeholder="juan@correo.com" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-telefono">Teléfono</label>
+            <input type="text" id="reg-telefono" placeholder="300 000 0000">
+          </div>
+          <div class="form-group">
+            <label for="reg-ciudad">Ciudad</label>
+            <input type="text" id="reg-ciudad" placeholder="Ej: Medellín">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-pass">Contraseña (mín. 6 caracteres)</label>
+          <input type="password" id="reg-pass" minlength="6" placeholder="Mínimo 6 caracteres" required>
+        </div>
+        <div class="login-error" id="reg-error"></div>
+        <button type="submit" class="btn-gold" style="width:100%">Registrarme como Cliente</button>
+      </form>
+
+      <a href="index.html" class="volver">← Volver al sitio principal</a>
+    </div>
   </div>
 
-  <!-- PANEL -->
+  <!-- PANEL (ADMINISTRADOR O CLIENTE) -->
   <div id="vista-panel" class="admin-layout" style="display:none;">
     <aside class="admin-side">
-      <div class="admin-brand">ImpulsaMarket<small>Administración</small></div>
+      <div class="admin-brand">ImpulsaMarket<small id="panel-rol-sub">Panel</small></div>
       <div id="admin-menu"></div>
       <div class="admin-user">
         <div id="admin-nombre"></div>
+        <a href="index.html" class="btn-outline" style="text-align:center;text-decoration:none;">← Ir al sitio</a>
         <button class="btn-outline" id="btn-salir">Cerrar sesión</button>
       </div>
     </aside>

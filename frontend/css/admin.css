@@ -1,4 +1,4 @@
-/* ImpulsaMarket — estilos del panel de administración (usa las variables de styles.css) */
+/* ImpulsaMarket — estilos del panel de administración y portal de clientes */
 input[type="password"] {
   background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px;
   color:var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem; padding:12px 16px;
@@ -6,11 +6,15 @@ input[type="password"] {
 }
 input[type="password"]:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,.12); }
 
-/* Login */
+/* Login y Registro */
 .login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
-.login-card { width:min(420px,100%); background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:40px 36px; box-shadow:var(--shadow); }
+.login-card { width:min(460px,100%); background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:38px 34px; box-shadow:var(--shadow); }
 .login-logo { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:900; color:var(--gold-light); text-align:center; }
-.login-sub { text-align:center; color:var(--text-muted); margin-bottom:28px; font-size:.9rem; }
+.login-sub { text-align:center; color:var(--text-muted); margin-bottom:20px; font-size:.9rem; }
+.auth-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; background:rgba(255,255,255,.03); padding:5px; border-radius:12px; border:1px solid var(--border); margin-bottom:22px; }
+.auth-tab { background:none; border:none; color:var(--text-muted); padding:10px 12px; border-radius:8px; font:600 .83rem 'DM Sans',sans-serif; cursor:pointer; transition:all var(--transition); }
+.auth-tab:hover { color:var(--text); }
+.auth-tab.activo { background:var(--bg-glass); color:var(--gold-light); border:1px solid var(--border); }
 .login-error { color:var(--danger); font-size:.85rem; min-height:22px; margin-bottom:8px; text-align:center; }
 .volver { display:block; text-align:center; margin-top:18px; color:var(--text-muted); font-size:.85rem; text-decoration:none; }
 .volver:hover { color:var(--gold-light); }
@@ -24,7 +28,7 @@ input[type="password"]:focus { border-color:var(--gold); box-shadow:0 0 0 3px rg
 #admin-menu button { background:none; border:none; color:var(--text-muted); text-align:left; padding:12px 14px; border-radius:10px; font:500 .92rem 'DM Sans',sans-serif; cursor:pointer; transition:all var(--transition); }
 #admin-menu button:hover { background:var(--bg-glass); color:var(--text); }
 #admin-menu button.activo { background:var(--bg-glass); color:var(--gold-light); border:1px solid var(--border); }
-.admin-user { border-top:1px solid var(--border); padding-top:18px; font-size:.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:12px; }
+.admin-user { border-top:1px solid var(--border); padding-top:18px; font-size:.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:10px; }
 .admin-user .btn-outline { padding:9px 16px; font-size:.75rem; }
 .admin-main { padding:36px 40px; min-width:0; }
 
@@ -55,6 +59,7 @@ tr:hover td { background:var(--bg-glass); }
 .etiqueta.cliente { color:var(--success); border-color:rgba(46,204,113,.3); background:rgba(46,204,113,.1); }
 .estrellas { color:var(--gold); letter-spacing:2px; white-space:nowrap; }
 .ayuda { color:var(--text-muted); font-size:.78rem; }
+.perfil-card { max-width:520px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-top:20px; }
 
 @media (max-width: 800px) {
   .admin-layout { grid-template-columns:1fr; }

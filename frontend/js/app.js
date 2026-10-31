@@ -29,14 +29,67 @@ let servicios = [];
 let pedidos   = [];
 
 /* ════════════════════════════════════════════
-   INICIALIZACIÓN
+   INICIALIZACIÓN Y SESIÓN EN NAVBAR
 ════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async () => {
+  actualizarNavSesion();
   await cargarServicios();
   await cargarPedidos();
   initFormPedido();
   animarContadores();
 });
+
+function obtenerSesionActual() {
+  try {
+    return JSON.parse(localStorage.getItem('im_usuario') || sessionStorage.getItem('im_usuario') || 'null');
+  } catch { return null; }
+}
+
+function obtenerTokenActual() {
+  return localStorage.getItem('im_token') || sessionStorage.getItem('im_token') || null;
+}
+
+function esAdminActual() {
+  const usr = obtenerSesionActual();
+  return Boolean(obtenerTokenActual() && usr && usr.rol === 'admin');
+}
+
+function actualizarNavSesion() {
+  const nav     = document.getElementById('nav-acciones');
+  const fabWrap = document.getElementById('fab-admin-wrap');
+  const panel   = document.getElementById('panel-admin');
+  const usr     = obtenerSesionActual();
+  const esAdmin = esAdminActual();
+
+  // Mostrar el botón flotante "Panel Admin" ÚNICAMENTE si inició sesión como administrador
+  if (fabWrap) fabWrap.style.display = esAdmin ? '' : 'none';
+  if (!esAdmin && panel) panel.classList.remove('open');
+
+  if (!nav) return;
+  if (usr && usr.nombre) {
+    const etq = esAdmin ? 'Panel Admin' : 'Mi Cuenta';
+    nav.innerHTML = `
+      <a class="nav-login" href="admin.html">👤 ${esc(usr.nombre)} · ${etq}</a>
+      <button class="nav-login" onclick="cerrarSesionSitio()" style="cursor:pointer;background:none;">Salir</button>
+      <button class="nav-cta" onclick="abrirModalCotizacion()">Cotizar Ahora</button>
+    `;
+  } else {
+    nav.innerHTML = `
+      <a class="nav-login" href="admin.html">Iniciar sesión</a>
+      <a class="nav-login" href="admin.html#registro">Registrarse</a>
+      <button class="nav-cta" onclick="abrirModalCotizacion()">Cotizar Ahora</button>
+    `;
+  }
+}
+
+function cerrarSesionSitio() {
+  localStorage.removeItem('im_token');
+  localStorage.removeItem('im_usuario');
+  sessionStorage.removeItem('im_token');
+  sessionStorage.removeItem('im_usuario');
+  actualizarNavSesion();
+  mostrarToast('👋 Has cerrado sesión', 'success');
+}
 
 /* ════════════════════════════════════════════
    SERVICIOS  (GET /api/servicios)
@@ -99,7 +152,7 @@ function renderPedidos() {
         <span class="pedido-card-name">${esc(p.nombre_cliente)}</span>
         <span class="pedido-card-id">#${p.id_pedido}</span>
       </div>
-      <div class="pedido-card-svc">🎨 ${esc(p.nombre_servicio || p.id_servicio)}</div>
+      <div class="pedido-card-svc">🎨 ${esc(p.nombre_servicio || p.id_servicio)}${p.nombre_empleado ? ' · 👤 ' + esc(p.nombre_empleado) : ''}</div>
       <div class="pedido-card-detail">${esc(p.detalles || 'Sin detalles')}</div>
       <div class="pedido-card-footer">
         <span class="status-badge ${p.estado}">${etiquetaEstado(p.estado)}</span>
@@ -161,13 +214,19 @@ async function crearPedido() {
 }
 
 async function actualizarPedido(id) {
+  const token = obtenerTokenActual();
   const body = {
     estado:   document.getElementById('pedido-estado').value,
     detalles: document.getElementById('pedido-detalles').value.trim(),
   };
   try {
     const res = await fetch(`${API}/pedidos/${id}`, {
-      method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: 'Bearer ' + token } : {}),
+      },
+      body: JSON.stringify(body),
     });
     if (!res.ok) throw new Error();
     cerrarModal();
@@ -183,8 +242,12 @@ async function actualizarPedido(id) {
 ════════════════════════════════════════════ */
 async function eliminarPedido(id) {
   if (!confirm('¿Eliminar este pedido permanentemente?')) return;
+  const token = obtenerTokenActual();
   try {
-    const res = await fetch(`${API}/pedidos/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API}/pedidos/${id}`, {
+      method: 'DELETE',
+      headers: token ? { Authorization: 'Bearer ' + token } : {},
+    });
     if (!res.ok) throw new Error();
     mostrarToast('🗑️ Pedido eliminado', 'success');
     await cargarPedidos();
@@ -199,6 +262,12 @@ async function eliminarPedido(id) {
 function abrirModalCotizacion() {
   limpiarModal();
   marcarObligatorios(true);
+  const usr = obtenerSesionActual();
+  if (usr) {
+    document.getElementById('cliente-nombre').value   = usr.nombre   || '';
+    document.getElementById('cliente-email').value    = usr.email    || '';
+    document.getElementById('cliente-telefono').value = usr.telefono || '';
+  }
   document.getElementById('modal-title').textContent = 'Solicitar Cotización';
   document.getElementById('grupo-cliente-nombre').style.display   = '';
   document.getElementById('grupo-cliente-contacto').style.display = '';
@@ -247,6 +316,7 @@ document.addEventListener('click', e => {
    PANEL ADMIN
 ════════════════════════════════════════════ */
 function toggleAdminPanel() {
+  if (!esAdminActual()) return;
   document.getElementById('panel-admin').classList.toggle('open');
 }
 

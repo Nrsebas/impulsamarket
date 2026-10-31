@@ -1,12 +1,14 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config({ path: require('path').join(__dirname, '../../.env') });
 
+const dbName = process.env.DB_NAME || 'impulsamarket';
+
 const pool = mysql.createPool({
   host:     process.env.DB_HOST     || 'localhost',
-  port:     process.env.DB_PORT     || 3306,
+  port:     Number(process.env.DB_PORT) || 3306,
   user:     process.env.DB_USER     || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME     || 'impulsamarket',
+  database: dbName,
   waitForConnections: true,
   connectionLimit:    10,
   queueLimit:         0,
@@ -16,7 +18,7 @@ const pool = mysql.createPool({
 (async () => {
   try {
     const conn = await pool.getConnection();
-    console.log('✅  MySQL conectado → base de datos:', process.env.DB_NAME);
+    console.log('✅  MySQL conectado → base de datos:', dbName);
     conn.release();
   } catch (err) {
     console.error('❌  Error al conectar MySQL:', err.message);

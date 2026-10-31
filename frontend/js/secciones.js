@@ -16,5 +16,5 @@
           <div class="resena-meta">${esc(r.servicio)}${r.ciudad ? ' · ' + esc(r.ciudad) : ''}</div>
         </div>`).join('');
     })
-    .catch(() => { grid.innerHTML = '<p class="resenas-msg">No se pudieron cargar las reseñas (revisa que el servidor y la base impulsamarket_v2 estén activos).</p>'; });
+    .catch(() => { grid.innerHTML = '<p class="resenas-msg">No se pudieron cargar las reseñas (revisa que el servidor y la base de datos impulsamarket estén activos).</p>'; });
 })();

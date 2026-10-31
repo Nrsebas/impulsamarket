@@ -28,8 +28,9 @@
       <a href="#testimonios">Clientes</a>
       <a href="#aliados">Aliados</a>
     </div>
-    <div class="nav-acciones">
+    <div class="nav-acciones" id="nav-acciones">
       <a class="nav-login" href="admin.html">Iniciar sesión</a>
+      <a class="nav-login" href="admin.html#registro">Registrarse</a>
       <button class="nav-cta" onclick="abrirModalCotizacion()">Cotizar Ahora</button>
     </div>
   </nav>
@@ -152,8 +153,8 @@
     </div>
   </div>
 
-  <!-- BOTONES FLOTANTES -->
-  <div class="floating-buttons">
+  <!-- BOTONES FLOTANTES (Solo visible para Administrador) -->
+  <div class="floating-buttons" id="fab-admin-wrap" style="display:none;">
     <button class="fab" onclick="toggleAdminPanel()" title="Panel de Administración">
       <div class="fab-icon">⚙</div>
       <span class="fab-label">Panel Admin</span>
